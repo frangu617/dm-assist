@@ -88,48 +88,23 @@ export default function CharacterCreator() {
     description: "",
   });
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/characters`)
-      .then((response) => {
-        console.log("Response:", response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Data:", data);
-        setCharacters(data);
-      })
-      .catch((error) => console.error("Error fetching characters:", error));
-  }, []);
+    useEffect(() => {
+        const storedCharacters = JSON.parse(localStorage.getItem('characters')) || [];
+        setCharacters(storedCharacters);
+    }, []);
 
-  const handleCharacterSubmit = (e) => {
-    e.preventDefault();
+    const handleCharacterSubmit = (e) => {
+        e.preventDefault();
+        const characterData = { ...newCharacter}; // Prepare character data
 
-    const characterData = {
-      ...newCharacter,
-      inventory: newCharacter.inventory.split(",").map((item) => item.trim()), // Convert inventory string to array
-    };
+        const existingCharacters = JSON.parse(localStorage.getItem('characters')) || [];
+        const updatedCharacters = [...existingCharacters, characterData];
+        localStorage.setItem('characters', JSON.stringify(updatedCharacters));
 
-    // Send a POST request to the server to create a character
-    fetch(`${process.env.REACT_APP_API_URL}/api/characters`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(characterData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setCharacters([...characters, data]);
+        setCharacters(updatedCharacters);
         setNewCharacter(getInitialCharacterState());
-      })
-      .catch((error) => console.error("Error creating character:", error));
-
-    // Reset form state
-    setNewCharacter(getInitialCharacterState());
-
-    // Increment key to force-reset child components like SkillsSelector
-    setResetKey((prevKey) => prevKey + 1);
-  };
+        setResetKey(prevKey => prevKey + 1);
+    };
 
   const handleClassChange = (selectedClass) => {
     setNewCharacter({ ...newCharacter, class: selectedClass }); // Update the selected class in the state
