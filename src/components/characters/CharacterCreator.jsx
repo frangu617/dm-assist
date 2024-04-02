@@ -88,8 +88,13 @@ export default function CharacterCreator() {
     description: "",
   });
 
+  let VITE_APP_URL = import.meta.env.VITE_APP_URL;
+  console.log("VITE_API_URL: ", VITE_APP_URL);
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/characters`)
+    fetch(
+      `${import.meta.env.VITE_APP_URL}/api/characters` ||
+        "http://localhost:5000/api/characters"
+    )
       .then((response) => {
         console.log("Response:", response);
         return response.json();
@@ -110,7 +115,7 @@ export default function CharacterCreator() {
     };
 
     // Send a POST request to the server to create a character
-    fetch(`${process.env.REACT_APP_API_URL}/api/characters`, {
+    fetch(`${import.meta.env.VITE_APP_URL}/api/characters`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

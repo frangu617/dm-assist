@@ -6,7 +6,7 @@ const CharacterManager = () => {
     const [expandedCharacterId, setExpandedCharacterId] = useState(null);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/api/characters`)
+        fetch(`${import.meta.env.VITE_APP_URL}/api/characters`)
           .then((response) => response.json())
           .then((data) => setCharacters(data))
           .catch((error) => console.error("Error fetching characters:", error));
@@ -17,7 +17,7 @@ const CharacterManager = () => {
     };
 
     const deleteCharacter = (id) => {
-        fetch(`${import.meta.env.VITE_API_URL}/api/characters/${id}`, {
+        fetch(`${import.meta.env.VITE_APP_URL}/api/characters/${id}`, {
           method: "DELETE",
         })
           .then(() =>
