@@ -12,7 +12,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -36,3 +35,39 @@
     transform: rotate(360deg);
   }
 }
+.list-item.selected {
+  color: #8B0000;
+  font-weight: bold;
+}
+
+.checkbox {
+  border-color: #000;
+}
+.checkbox:not(.checked) {
+  background-color: #fff;
+  border-color: #000;
+}
+.checkbox.checked {
+  background-color: #8B0000;
+  border-color: #000;
+  color: #fff;
+}
+
+body {
+  background-color: #fdf5e6;
+}
+
+.paper {
+  background-color: #fffaf0;
+}
+
+h1 {
+  font-family: "Georgia", serif;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.body-text {
+  font-family: "Caudex", serif;
+  font-size: 1rem;
+}/*# sourceMappingURL=App.css.map */
