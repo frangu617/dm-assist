@@ -5,19 +5,6 @@ import {
   NavLink,
   Routes,
 } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-  Container,
-  Button,
-} from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import customTheme from "./components/themes/customTheme";
-import { ThemeProvider, CssBaseline } from "@mui/material";
 import CharacterManager from "./components/characters/CharacterManager";
 import CharacterCreator from "./components/characters/CharacterCreator";
 import Home from "./components/Home";
@@ -31,215 +18,141 @@ import AbilityScores from "./components/characters/AbilityScore";
 import DnDClasses from "./components/reference_guide/DnDClasses";
 import Skills from "./components/characters/Skills";
 import Alignment from "./components/reference_guide/Alignment";
+import "./App.scss"; // Ensure you have this SCSS file with the styles defined
 
 function App() {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [diceMenuAnchorEl, setDiceMenuAnchorEl] = useState(null);
-  const [referenceMenuAnchorEl, setReferenceMenuAnchorEl] = useState(null);
+  const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
+  const [toolsMenuOpen, setToolsMenuOpen] = useState(false);
+  const [referenceMenuOpen, setReferenceMenuOpen] = useState(false);
 
-  const openCharacterMenu = Boolean(anchorEl);
-  const openDiceMenu = Boolean(diceMenuAnchorEl);
-  const openReferenceMenu = Boolean(referenceMenuAnchorEl);
+  const toggleCharacterMenu = () => setCharacterMenuOpen(!characterMenuOpen);
+  const toggleToolsMenu = () => setToolsMenuOpen(!toolsMenuOpen);
+  const toggleReferenceMenu = () => setReferenceMenuOpen(!referenceMenuOpen);
 
-  const handleCharacterMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleDiceMenuClick = (event) => {
-    setDiceMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleReferenceMenuClick = (event) => {
-    setReferenceMenuAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-    setDiceMenuAnchorEl(null);
-    setReferenceMenuAnchorEl(null);
+  const closeAllMenus = () => {
+    setCharacterMenuOpen(false);
+    setToolsMenuOpen(false);
+    setReferenceMenuOpen(false);
   };
 
   return (
-    <ThemeProvider theme={customTheme}>
-      <CssBaseline />
-      <Router>
-        <AppBar position="static" style={{ marginBottom: "20px" }}>
-          <Toolbar>
-            <Typography variant="h6" style={{ flexGrow: 1 }}>
-              <NavLink
-                to="/"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                DM Assist
-              </NavLink>
-            </Typography>
-
-            {/* Character Menu Dropdown */}
-            <Button
-              aria-controls="character-menu"
-              aria-haspopup="true"
-              onClick={handleCharacterMenuClick}
-              color="inherit"
-              endIcon={
-                openCharacterMenu ? (
-                  <ArrowDropDownIcon />
-                ) : (
-                  <ArrowDropDownIcon />
-                )
-              }
-            >
+    <Router>
+      <div className="app-bar">
+        <div className="toolbar">
+          <NavLink to="/" className="logo-link">
+            DM Assist
+          </NavLink>
+          <div className="nav-section">
+            <button className="nav-button" onClick={toggleCharacterMenu}>
               Characters
-            </Button>
-            <Menu
-              id="character-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={openCharacterMenu}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>
+            </button>
+            {characterMenuOpen && (
+              <div className="dropdown-menu">
                 <NavLink
                   to="/create"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
                   Create Character
                 </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
                 <NavLink
                   to="/manager"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
                   Character Manager
                 </NavLink>
-              </MenuItem>
-            </Menu>
-
-            {/* Other Tools Dropdown */}
-            <Button
-              aria-controls="dice-menu"
-              aria-haspopup="true"
-              onClick={handleDiceMenuClick}
-              color="inherit"
-              endIcon={
-                openDiceMenu ? <ArrowDropDownIcon /> : <ArrowDropDownIcon />
-              }
-            >
+              </div>
+            )}
+            <button className="nav-button" onClick={toggleToolsMenu}>
               Tools
-            </Button>
-            <Menu
-              id="dice-menu"
-              anchorEl={diceMenuAnchorEl}
-              keepMounted
-              open={openDiceMenu}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>
+            </button>
+            {toolsMenuOpen && (
+              <div className="dropdown-menu">
                 <NavLink
                   to="/dice"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
                   Dice Roller
                 </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
                 <NavLink
                   to="/initiative-tracker"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
                   Initiative Tracker
                 </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
                 <NavLink
                   to="/music-search"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
-                  Music
+                  Music Search
                 </NavLink>
-              </MenuItem>
-            </Menu>
-            <Button
-              aria-controls="reference-menu"
-              aria-haspopup="true"
-              onClick={handleReferenceMenuClick}
-              color="inherit"
-              endIcon={
-                openReferenceMenu ? (
-                  <ArrowDropDownIcon />
-                ) : (
-                  <ArrowDropDownIcon />
-                )
-              }
-            >
+              </div>
+            )}
+            <button className="nav-button" onClick={toggleReferenceMenu}>
               Reference
-            </Button>
-            <Menu
-              id="reference-menu"
-              anchorEl={referenceMenuAnchorEl}
-              keepMounted
-              open={openReferenceMenu}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>
+            </button>
+            {referenceMenuOpen && (
+              <div className="dropdown-menu">
                 <NavLink
                   to="/rules-search"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
-                  Rules
+                  Rules Search
                 </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
                 <NavLink
                   to="/monster-search"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
-                  Monsters
+                  Monster Search
                 </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
                 <NavLink
                   to="/races-search"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
-                  Races
+                  Races Search
                 </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
                 <NavLink
                   to="/classes"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
                   Classes
                 </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
                 <NavLink
                   to="/alignment"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="dropdown-item"
+                  onClick={closeAllMenus}
                 >
                   Alignment
                 </NavLink>
-              </MenuItem>
-            </Menu>
-          </Toolbar>
-        </AppBar>
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/create" element={<CharacterCreator />} />
-            <Route path="/manager" element={<CharacterManager />} />
-            <Route path="/dice" element={<DiceRoller />} />
-            <Route path="/initiative-tracker" element={<InitiativeTracker />} />
-            <Route path="/music-search" element={<MusicSearch />} />
-            <Route path="/monster-search" element={<MonsterSearch />} />
-            <Route path="/races-search" element={<RacesSearch />} />
-            <Route path="/rules-search" element={<RulesSearch />} />
-            <Route path="/alignment" element={<Alignment />} />
-            <Route path="/classes" element={<DnDClasses />} />
-          </Routes>
-        </Container>
-      </Router>
-    </ThemeProvider>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create" element={<CharacterCreator />} />
+          <Route path="/manager" element={<CharacterManager />} />
+          <Route path="/dice" element={<DiceRoller />} />
+          <Route path="/initiative-tracker" element={<InitiativeTracker />} />
+          <Route path="/music-search" element={<MusicSearch />} />
+          <Route path="/monster-search" element={<MonsterSearch />} />
+          <Route path="/races-search" element={<RacesSearch />} />
+          <Route path="/rules-search" element={<RulesSearch />} />
+          <Route path="/alignment" element={<Alignment />} />
+          <Route path="/classes" element={<DnDClasses />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

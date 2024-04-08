@@ -86,7 +86,7 @@ $border-color: #000;
   }
 }
 
-// Usage example
+
 body {
   background-color: $background-default;
 }
@@ -103,4 +103,85 @@ h1 {
 .body-text {
   @include typography-caudex;
   @include body1-style;
+}
+
+// Extending your SCSS with navigation styles
+
+.app-bar {
+  background-color: $primary-color; // Dark background for the navbar
+  padding: 10px 20px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-link, .nav-link {
+  color: $paper-color; // Light blue links
+  text-decoration: none;
+  margin-right: 15px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.nav-section {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: #fff; // White text for buttons
+  &:hover{
+    background-color: $secondary-color;
+    color: #fff;
+  }
+  cursor: pointer;
+  margin-left: 20px;
+  padding: 10px 15px;
+
+  &:hover {
+    background-color: #61dafb; // Light blue background on hover
+    color: #282c34; // Dark text on hover
+  }
+}
+
+.dropdown-menu {
+  display: none; // Initially hide the dropdown
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: $paper-color; // Light background for the dropdown
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); // Add some shadow for depth
+  padding: 10px 0;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.dropdown-item {
+  &:hover {
+    background-color: $secondary-color;
+    color: #fff;
+  }
+  color: #282c34; // Dark text for dropdown items
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+
+  &:hover {
+    background-color: #61dafb; // Light blue background on hover
+    color: #fff; // White text on hover
+  }
+}
+
+// Show the dropdown menu when hovered
+.nav-button:hover + .dropdown-menu, 
+.dropdown-menu:hover {
+  display: block;
 }

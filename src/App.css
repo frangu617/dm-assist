@@ -70,4 +70,79 @@ h1 {
 .body-text {
   font-family: "Caudex", serif;
   font-size: 1rem;
+}
+
+.app-bar {
+  background-color: #8B0000;
+  padding: 10px 20px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-link, .nav-link {
+  color: #fffaf0;
+  text-decoration: none;
+  margin-right: 15px;
+}
+.logo-link:hover, .nav-link:hover {
+  text-decoration: underline;
+}
+
+.nav-section {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 20px;
+  padding: 10px 15px;
+}
+.nav-button:hover {
+  background-color: #008080;
+  color: #fff;
+}
+.nav-button:hover {
+  background-color: #61dafb;
+  color: #282c34;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: #fffaf0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 10px 0;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.dropdown-item {
+  color: #282c34;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-item:hover {
+  background-color: #008080;
+  color: #fff;
+}
+.dropdown-item:hover {
+  background-color: #61dafb;
+  color: #fff;
+}
+
+.nav-button:hover + .dropdown-menu,
+.dropdown-menu:hover {
+  display: block;
 }/*# sourceMappingURL=App.css.map */
