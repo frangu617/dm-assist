@@ -44,6 +44,7 @@ $background-default: #fdf5e6;
 $paper-color: #fffaf0;
 $checkmark-color: #fff;
 $border-color: #000;
+$highlight-color: #61dafb;
 
 // Define typography styles
 @mixin typography-georgia {
@@ -108,8 +109,15 @@ h1 {
 // Extending your SCSS with navigation styles
 
 .app-bar {
-  background-color: $primary-color; // Dark background for the navbar
+  background-color: $primary-color;
   padding: 10px 20px;
+  .MuiButton-root { // Targeting Material-UI button
+    color: $paper-color; // Light color for button text
+    &:hover {
+      background-color: $highlight-color; // Highlight color on hover
+      color: $primary-color; // Dark text on hover
+    }
+  }
 }
 
 .toolbar {
@@ -153,35 +161,28 @@ h1 {
 }
 
 .dropdown-menu {
-  display: none; // Initially hide the dropdown
-  position: absolute;
-  left: 0;
-  top: 100%;
-  background-color: $paper-color; // Light background for the dropdown
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); // Add some shadow for depth
-  padding: 10px 0;
-  margin-top: 5px;
-  border-radius: 5px;
+  .MuiPaper-root { // Targeting the Material-UI Paper component used for Menu
+    background-color: $paper-color;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .dropdown-item {
-  &:hover {
-    background-color: $secondary-color;
-    color: #fff;
-  }
-  color: #282c34; // Dark text for dropdown items
-  padding: 10px 20px;
-  text-decoration: none;
-  display: block;
-
-  &:hover {
-    background-color: #61dafb; // Light blue background on hover
-    color: #fff; // White text on hover
+  .MuiMenuItem-root { // Targeting Material-UI menu item
+    color: $primary-color;
+    &:hover {
+      background-color: $highlight-color; // Highlight color on hover
+      color: $paper-color; // Light text on hover
+    }
+    &:focus {
+      background-color: $secondary-color; // Different color for active/focused state
+      color: $paper-color;
+    }
   }
 }
 
 // Show the dropdown menu when hovered
-.nav-button:hover + .dropdown-menu, 
-.dropdown-menu:hover {
-  display: block;
-}
+// .nav-button:hover + .dropdown-menu, 
+// .dropdown-menu:hover {
+//   display: block;
+// }

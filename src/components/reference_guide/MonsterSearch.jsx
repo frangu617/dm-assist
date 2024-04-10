@@ -106,26 +106,7 @@ function MonsterSearch() {
           ))}
         </Select>
       </FormControl>
-
       
-      {/* <Box sx={{ width: '30%', mr: 2 }}>
-        <Paper elevation={3} sx={{ maxHeight: 500, overflow: 'auto' }}>
-          <List>
-            {isLoading && <CircularProgress />}
-            {error && <Typography color="error">{error}</Typography>}
-            {monsters.map((monster, index) => (
-              <ListItem button key={index} onClick={() => fetchMonsterDetails(monster.index)}>
-                {monster.img && (
-                  <ListItemAvatar>
-                    <Avatar alt={monster.name} src={monster.img} />
-                  </ListItemAvatar>
-                )}
-                <ListItemText primary={monster.name} />
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
-      </Box> */}
       <Box sx={{ width: '100%' }}>
         <Paper elevation={3} sx={{ p: 2, minHeight: 500, overflow: 'auto' }}>
           {selectedMonster && (

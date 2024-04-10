@@ -5,6 +5,11 @@ import {
   NavLink,
   Routes,
 } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Link as RouterLink } from "react-router-dom";
+
 import CharacterManager from "./components/characters/CharacterManager";
 import CharacterCreator from "./components/characters/CharacterCreator";
 import Home from "./components/Home";
@@ -14,25 +19,22 @@ import MusicSearch from "./components/tools/MusicSearch";
 import MonsterSearch from "./components/reference_guide/MonsterSearch";
 import RacesSearch from "./components/reference_guide/RacesSearch";
 import RulesSearch from "./components/reference_guide/RulesSearch";
-import AbilityScores from "./components/characters/AbilityScore";
 import DnDClasses from "./components/reference_guide/DnDClasses";
-import Skills from "./components/characters/Skills";
 import Alignment from "./components/reference_guide/Alignment";
-import "./App.scss"; // Ensure you have this SCSS file with the styles defined
+import "./App.scss"; // Your SCSS file
 
 function App() {
-  const [characterMenuOpen, setCharacterMenuOpen] = useState(false);
-  const [toolsMenuOpen, setToolsMenuOpen] = useState(false);
-  const [referenceMenuOpen, setReferenceMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuId, setMenuId] = useState("");
 
-  const toggleCharacterMenu = () => setCharacterMenuOpen(!characterMenuOpen);
-  const toggleToolsMenu = () => setToolsMenuOpen(!toolsMenuOpen);
-  const toggleReferenceMenu = () => setReferenceMenuOpen(!referenceMenuOpen);
+  const handleClick = (event, id) => {
+    setAnchorEl(event.currentTarget);
+    setMenuId(id);
+  };
 
-  const closeAllMenus = () => {
-    setCharacterMenuOpen(false);
-    setToolsMenuOpen(false);
-    setReferenceMenuOpen(false);
+  const handleClose = () => {
+    setAnchorEl(null);
+    setMenuId("");
   };
 
   return (
@@ -43,97 +45,120 @@ function App() {
             DM Assist
           </NavLink>
           <div className="nav-section">
-            <button className="nav-button" onClick={toggleCharacterMenu}>
+            <Button
+              sx={{
+                color: "paperColor",
+                "&:hover": { bgcolor: "highlightColor", color: "primaryColor" },
+              }}
+              onClick={(e) => handleClick(e, "characters")}
+            >
               Characters
-            </button>
-            {characterMenuOpen && (
-              <div className="dropdown-menu">
-                <NavLink
-                  to="/create"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Create Character
-                </NavLink>
-                <NavLink
-                  to="/manager"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Character Manager
-                </NavLink>
-              </div>
-            )}
-            <button className="nav-button" onClick={toggleToolsMenu}>
+            </Button>
+            <Menu
+              id="characters-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl) && menuId === "characters"}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/create"
+              >
+                Create Character
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/manager"
+              >
+                Character Manager
+              </MenuItem>
+            </Menu>
+            <Button
+              sx={{
+                color: "paperColor",
+                "&:hover": { bgcolor: "highlightColor", color: "primaryColor" },
+              }}
+              onClick={(e) => handleClick(e, "tools")}
+            >
               Tools
-            </button>
-            {toolsMenuOpen && (
-              <div className="dropdown-menu">
-                <NavLink
-                  to="/dice"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Dice Roller
-                </NavLink>
-                <NavLink
-                  to="/initiative-tracker"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Initiative Tracker
-                </NavLink>
-                <NavLink
-                  to="/music-search"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Music Search
-                </NavLink>
-              </div>
-            )}
-            <button className="nav-button" onClick={toggleReferenceMenu}>
+            </Button>
+            <Menu
+              id="tools-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl) && menuId === "tools"}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/dice-roller"
+              >
+                Dice Roller
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/initiative-tracker"
+              >
+                Initiative Tracker
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/music-search"
+              >
+                Music Search
+              </MenuItem>
+            </Menu>
+            <Button
+              sx={{
+                color: "paperColor",
+                "&:hover": { bgcolor: "highlightColor", color: "primaryColor" },
+              }}
+              onClick={(e) => handleClick(e, "reference")}
+            >
               Reference
-            </button>
-            {referenceMenuOpen && (
-              <div className="dropdown-menu">
-                <NavLink
-                  to="/rules-search"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Rules Search
-                </NavLink>
-                <NavLink
-                  to="/monster-search"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Monster Search
-                </NavLink>
-                <NavLink
-                  to="/races-search"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Races Search
-                </NavLink>
-                <NavLink
-                  to="/classes"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Classes
-                </NavLink>
-                <NavLink
-                  to="/alignment"
-                  className="dropdown-item"
-                  onClick={closeAllMenus}
-                >
-                  Alignment
-                </NavLink>
-              </div>
-            )}
+            </Button>
+            <Menu
+              id="reference-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl) && menuId === "reference"}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/rules-search"
+              >
+                Rules Search
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/monster-search"
+              >
+                Monster Search
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/races-search"
+              >
+                Races Search
+              </MenuItem>
+              <MenuItem
+                onClick={handleClose}
+                component={RouterLink}
+                to="/classes"
+              >
+                Classes
+              </MenuItem>
+              
+            </Menu>
           </div>
         </div>
       </div>
